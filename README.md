@@ -7,7 +7,7 @@ Built around a facade entry point with singleton managers for each subsystem, ba
 
 ---
 
-## 👥 Team
+## Team
 | Name | GitHub |
 |------|--------|
 | Quinn Murphy | [@QuinnMurphy-CSE](https://github.com/QuinnMurphy-CSE) |
@@ -17,20 +17,31 @@ Built around a facade entry point with singleton managers for each subsystem, ba
 
 ---
 
-## 📦 Deliverables
+## Deliverables
 | Deliverable | Link |
 |-------------|------|
 | Software Requirements Specification (SRS) | [requirements.pdf](docs/requirements.pdf) |
-| UML Class Diagram | [docs folder](docs) |
+| UML Class Diagram | [uml-class-diagram.pdf](docs/uml-class-diagram.pdf) |
 | UML Sequence Diagrams | [docs folder](docs) |
-| Use Case Diagram | [Lucidchart](PASTE_VIEW_ONLY_LINK) |
-| Functional Requirements Spreadsheet | [Requirements Spreadsheet](PASTE_LINK) |
+| Use Case Diagram | [Lucidchart](https://lucid.app/lucidchart/d0686cc7-17bb-437d-8419-874bf28d4732/edit?viewport_loc=-3623%2C-2867%2C10147%2C6444%2C0_0&invitationId=inv_e1131cec-8aa1-41bc-b340-5b284f1b46ed) |
+| Functional Requirements Spreadsheet | [Requirements Spreadsheet](https://emailsc-my.sharepoint.com/:x:/g/personal/qrmurphy_email_sc_edu/IQDfv9UA8K3ITZQTtXJ2nSvXAbbut9_ley5XSkfzBaxgKuw?e=J2nEKe) |
 | Sample JSON Data | [jsonfiles](jsonfiles) |
-| SCRUM Project Board | [Project Board](PASTE_PROJECT_BOARD_LINK) |
+| SCRUM Project Board | [Project Board](https://github.com/users/shmoney2/projects/1) |
 
 ---
 
-## 🚀 Getting Started
+## Prototype Section
+- coming soon
+
+---
+
+## Presentation Section
+- coming soon
+
+---
+
+## Getting Started
+
 
 ### Prerequisites
 - JDK 17 or newer
@@ -47,7 +58,7 @@ A small JavaFX window should open.
 
 ---
 
-## 🗂️ Repository Structure
+## Repository Structure
 ```
 Hurricane-Relief-System/
 ├── docs/                    # SRS, UML class + sequence diagrams
@@ -63,15 +74,7 @@ Hurricane-Relief-System/
 
 ---
 
-## 🏗️ Architecture
-- **Facade:** `ReliefSystemFacade` — single entry point used by the UI and Driver
-- **Managers (singletons):** `UserManagement`, `ShelterManagement`, `ReliefManagement`, `HazardReportManagement`, `HurricaneEventManagement`
-- **Models:** `User`, `Admin`, `Helper`, `Requester`, `RegisteredVictim`, `GuestVictim`, `Shelter`, `ShelterResource`, `ReliefRequest`, `RequestComment`, `HazardReport`, `HurricaneEvent`, `GeographicRegion`, `Location`, `EmergencyContact`
-- **Persistence:** `DataLoader`, `DataWriter`, `DataConstants` (JSON)
-
----
-
-## 🛠️ Built With
+## Built With
 - Java + JavaFX 21
 - Maven
 - JSON
