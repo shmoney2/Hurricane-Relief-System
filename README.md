@@ -45,8 +45,6 @@ mvn clean javafx:run
 ```
 A small JavaFX window should open.
 
-> **Apple Silicon (M1/M2/M3) note:** the project uses JavaFX 21.0.5, which supports Apple chips. If you see an `incompatible architecture (have 'x86_64', need 'arm64')` error, run `rm -rf ~/.openjfx/cache` and try again.
-
 ---
 
 ## 🗂️ Repository Structure
