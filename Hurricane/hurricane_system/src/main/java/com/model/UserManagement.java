@@ -4,29 +4,19 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Keeps track of every user in the system (the "UserList").
- * Singleton: there is only ever one of these, so the whole app
- * shares the same list of users. The facade is the only class
- * that should be calling these methods.
- *
+ * Holds every user in the system. Singleton, so the whole app shares one list.
  * @author Abaan Jafri
  */
 public class UserManagement {
     private static UserManagement userManagement;
     private ArrayList<User> users;
 
-    /**
-     * Private so nobody can do "new UserManagement()".
-     * Loads the saved users from the JSON file when the list is first created.
-     */
+    // Private so only getInstance() can create it. Loads the saved users.
     private UserManagement() {
         users = DataLoader.getUsers();
     }
 
-    /**
-     * Gets the one shared UserManagement, creating it the first time it's asked for.
-     * @return the single UserManagement instance
-     */
+    // Returns the one shared instance, creating it the first time.
     public static UserManagement getInstance() {
         if (userManagement == null) {
             userManagement = new UserManagement();
@@ -34,17 +24,15 @@ public class UserManagement {
         return userManagement;
     }
 
-    /**
-     * @return every user in the system
-     */
+    // Returns all users.
     public ArrayList<User> getUsers() {
         return users;
     }
 
     /**
-     * Finds a user by their id.
-     * @param id the user's UUID
-     * @return the matching user, or null if nobody has that id
+     * Finds a user by id.
+     * @param id the user's id
+     * @return the user, or null if not found
      */
     public User getUser(UUID id) {
         if (id == null) {
@@ -59,10 +47,9 @@ public class UserManagement {
     }
 
     /**
-     * Finds a user by their username. Not case sensitive, so "JohnDoe" finds "johndoe".
-     * This is what login uses.
+     * Finds a user by username, ignoring case. Used for login.
      * @param userName the username to look for
-     * @return the matching user, or null if that username isn't taken
+     * @return the user, or null if not found
      */
     public User getUserByUserName(String userName) {
         if (userName == null) {
@@ -77,10 +64,9 @@ public class UserManagement {
     }
 
     /**
-     * Adds a new user to the list. This is what create account uses.
-     * Won't add a null user or a user whose username is already taken.
+     * Adds a new user. Used for create account.
      * @param user the user to add
-     * @return true if the user was added, false if they were rejected
+     * @return false if the user is null or the username is taken
      */
     public boolean addUser(User user) {
         if (user == null || getUserByUserName(user.getUserName()) != null) {
@@ -90,21 +76,12 @@ public class UserManagement {
         return true;
     }
 
-    /**
-     * Removes the user with the given id.
-     * @param id the id of the user to remove
-     */
+    // Removes the user with the given id.
     public void removeUser(UUID id) {
         users.removeIf(user -> user.getId().equals(id));
     }
 
-    /**
-     * Updates a user's profile info.
-     * @param id the id of the user to edit
-     * @param firstName their new first name
-     * @param lastName their new last name
-     * @param location their new location
-     */
+    // Updates the name and location of the user with the given id.
     public void editUser(UUID id, String firstName, String lastName, Location location) {
         User user = getUser(id);
         if (user != null) {
