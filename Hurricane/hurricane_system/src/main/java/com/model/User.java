@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * One person with an account in the system.
- */
+// One person with an account in the system.
 public class User {
     private UUID id;
     private String userName;
@@ -18,9 +16,7 @@ public class User {
     protected List<UserRole> roles;
     private List<EmergencyContact> emergencyContacts;
 
-    /**
-     * Makes a brand new user (create account). Gets a fresh id.
-     */
+    // Makes a new user with a fresh id. Used for create account.
     public User(String userName, String firstName, String lastName, String password, Location location) {
         this.id = UUID.randomUUID();
         this.userName = userName;
@@ -32,9 +28,7 @@ public class User {
         this.emergencyContacts = new ArrayList<>();
     }
 
-    /**
-     * Rebuilds an existing user that was loaded from the JSON file. Keeps their saved id.
-     */
+    // Rebuilds a saved user loaded from the JSON file.
     public User(UUID id, String userName, String firstName, String lastName, String password,
                 Location location, SafetyCategory safety, ArrayList<UserRole> roles) {
         this.id = id;
@@ -48,11 +42,7 @@ public class User {
         this.emergencyContacts = new ArrayList<>();
     }
 
-    /**
-     * Checks a login attempt against this user.
-     * Username ignores upper/lower case, password has to match exactly.
-     * @return true if both match
-     */
+    // Returns true if the username (ignoring case) and password match.
     public boolean signIn(String userName, String password) {
         if (userName == null || password == null) {
             return false;
@@ -64,9 +54,7 @@ public class User {
         // Stub
     }
 
-    /**
-     * Updates this user's profile info.
-     */
+    // Updates this user's name and location.
     public void editProfile(String firstName, String lastName, Location location) {
         this.firstName = firstName;
         this.lastName = lastName;
