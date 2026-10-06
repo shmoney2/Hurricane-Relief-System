@@ -9,7 +9,7 @@ public class HurricaneEvent {
     private float windSpeed;
     private String direction;
     private String path;
-    private DateTime estimatedArrivalTime; //Q: DateTime again?
+    private LocalDateTime estimatedArrivalTime;
 
     public HurricaneEvent(String name, int category, Location location){
         this.name = name;
@@ -24,7 +24,7 @@ public class HurricaneEvent {
     this.direction = direction;
     }
 
-    public HurricaneEvent(String name, int category, Location location, float windSpeed, String direction, String path, DateTime estimatedArrivalTime){
+    public HurricaneEvent(String name, int category, Location location, float windSpeed, String direction, String path, LocalDateTime estimatedArrivalTime){
     this.name = name;
     this.category = category;
     this.location = location;
@@ -46,13 +46,13 @@ public class HurricaneEvent {
     public float getWindSpeed() { return windSpeed; }
     public String getDirection() { return direction; }
     public String getPath() { return path; }
-    public DateTime getEstimatedArrivalTime() { return estimatedArrivalTime; }
+    public LocalDateTime getEstimatedArrivalTime() { return estimatedArrivalTime; }
 
     public void setLocation(Location location) { this.location = location; }
     public void setWindSpeed(float windSpeed) { this.windSpeed = windSpeed; }
     public void setDirection(String direction) { this.direction = direction; }
     public void setPath(String path) { this.path = path; }
-    public void setEstimatedArrivalTime(DateTime estimatedArrivalTime) {
+    public void setEstimatedArrivalTime(LocalDateTime estimatedArrivalTime) {
     this.estimatedArrivalTime = estimatedArrivalTime; }
 
 }

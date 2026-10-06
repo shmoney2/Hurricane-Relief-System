@@ -1,5 +1,8 @@
 package Hurricane.hurricane_system.src.main.java.com.model;
 
+import java.util.UUID;
+
+
 public class Location {
     private UUID id;
     private String addressLine1;

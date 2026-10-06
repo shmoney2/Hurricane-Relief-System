@@ -9,7 +9,7 @@ public class HazardReport {
     private Location location;
     private boolean verified;
     private String source;
-    private DateTime timeStamp;
+    private LocalDateTime timeStamp;
 
     public HazardReport(HazardCategory type, Location location, String source){
         //Q: Added UUID to UML because we need instance
@@ -18,9 +18,9 @@ public class HazardReport {
         this.location = location;
         this.source = source;
         this.verified = false;
-        // this.timeStamp = LocalDateTime.now(); //Q: Will be fixed once we figure out whether we're using DateTime or LocalDateTime
+        this.timeStamp = LocalDateTime.now();
     }
-    public HazardReport(HazardCategory type, Location location, boolean verified, String source, DateTime timeStamp){
+    public HazardReport(HazardCategory type, Location location, boolean verified, String source, LocalDateTime timeStamp){
         this.id = UUID.randomUUID;
         this.type = type;
         this.location = location;

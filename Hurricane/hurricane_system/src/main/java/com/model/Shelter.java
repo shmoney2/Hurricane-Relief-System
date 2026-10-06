@@ -25,7 +25,6 @@ public class Shelter {
                    boolean petFriendly, boolean accessible, boolean medicalStaff, 
                    boolean vetStaff, String operationalStatus) {
 
-        this.id = UUID.randomUUID();
         this.name = name;
         this.capacity = capacity;
         this.occupancy = occupancy;
@@ -50,7 +49,7 @@ public class Shelter {
     */
 
     // Getters
-    public String getId() { return id; }
+    public UUID getId() { return id; }
     public String getName() { return name; }
     public Location getAddress() { return address; }
     public int getCapacity() { return capacity; }
