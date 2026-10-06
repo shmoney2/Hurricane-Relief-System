@@ -1,7 +1,10 @@
-package Hurricane.hurricane_system.src.main.java.com.model;
+package com.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
+// One person with an account in the system.
 public class User {
     private UUID id;
     private String userName;
@@ -13,30 +16,53 @@ public class User {
     protected List<UserRole> roles;
     private List<EmergencyContact> emergencyContacts;
 
+    // Makes a new user with a fresh id. Used for create account.
     public User(String userName, String firstName, String lastName, String password, Location location) {
-        // Stub implementation
+        this.id = UUID.randomUUID();
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.location = location;
+        this.roles = new ArrayList<>();
+        this.emergencyContacts = new ArrayList<>();
     }
 
-    // Constructor 2
-    public User(UUID id, String userName, String firstName, String lastName, String password, 
+    // Rebuilds a saved user loaded from the JSON file.
+    public User(UUID id, String userName, String firstName, String lastName, String password,
                 Location location, SafetyCategory safety, ArrayList<UserRole> roles) {
-        // Stub implementation
+        this.id = id;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.location = location;
+        this.safety = safety;
+        this.roles = (roles == null) ? new ArrayList<>() : roles;
+        this.emergencyContacts = new ArrayList<>();
     }
 
+    // Returns true if the username (ignoring case) and password match.
     public boolean signIn(String userName, String password) {
-        return true; 
+        if (userName == null || password == null) {
+            return false;
+        }
+        return this.userName.equalsIgnoreCase(userName.trim()) && this.password.equals(password);
     }
 
     public void resetPassword() {
         // Stub
     }
 
-    public void editProfile() {
-        // Stub
+    // Updates this user's name and location.
+    public void editProfile(String firstName, String lastName, Location location) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.location = location;
     }
 
     public void markSafe(SafetyCategory category) {
-        // Stub
+        this.safety = category;
     }
 
     public void shareLocation() {
@@ -50,5 +76,15 @@ public class User {
     public void Languages() {
         // Stub
     }
-    
+
+    // Getters
+    public UUID getId() { return id; }
+    public String getUserName() { return userName; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getPassword() { return password; }
+    public Location getLocation() { return location; }
+    public SafetyCategory getSafety() { return safety; }
+    public List<UserRole> getRoles() { return roles; }
+    public List<EmergencyContact> getEmergencyContacts() { return emergencyContacts; }
 }
