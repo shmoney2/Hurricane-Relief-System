@@ -1,3 +1,4 @@
+//this needs to be fixed, does not match Shelter.java
 {
   "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
   "name": "Columbia Columbia High Gym Shelter",
@@ -12,23 +13,30 @@
   },
   "capacity": 250,
   "occupancy": 112,
+  "petFriendly": true,
+  "accessible": true,
+  "medicalStaff" : true,
+  "vetStaff": false,
   "amenities": [
     "Cots",
-    "Power Generators",
-    "Medical Station",
-    "Pet Friendly"
+    "Power Generators"
   ],
   "shelterResources": [
     {
-      "resourceType": "Water Bottles",
+      "type" : "Water Bottles",
       "quantity": 1200,
-      "unit": "cases"
+      "unit" : "cases",
+      "availableUntil": "2026-10-15T12:00:00",
+      "lowStrockThreshold": 200
     },
     {
-      "resourceType": "Blankets",
+      "type": "Blankets",
       "quantity": 300,
-      "unit": "individual"
+      "unit": "individual",
+      "availableUntil": "2026-10-15T12:00:00",
+      "lowStockThreshold": 50
     }
   ],
-  "operationalStatus": true
+  "operationalStatus": "OPEN"
 }
+
