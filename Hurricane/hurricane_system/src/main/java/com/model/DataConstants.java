@@ -1,14 +1,14 @@
+package com.model;
+
 import java.io.File;
 
 public abstract class DataConstants{
 
-    protected static final String USER_FILE_NAME = "json" + File.separator + "User.json";
-    protected static final String SHELTER_FILE_NAME = "json" + File.separator + "Shelter.json";
-    protected static final String RELIEF_REQUEST_FILE_NAME = "json" + File.separator + "relief_requests.json";
-    protected static final String REGION_FILE_NAME = "json" + File.separator + "regions.json";
-    protected static final String HAZARD_FILE_NAME = "json" + File.separator + "hazards.json";
-    protected static final String EVENT_FILE_NAME = "json" + File.separator + "events.json";
-    protected static final String LOCATION_FILE_NAME = "json" + File.separator + "locations.json";
+protected static final String SHELTER_FILE_NAME = "jsonfiles" + File.separator + "Shelters.json";
+    protected static final String USER_FILE_NAME = "jsonfiles" + File.separator + "Users.json";
+    protected static final String HAZARD_REPORT_FILE_NAME = "jsonfiles" + File.separator + "HazardReports.json";
+    protected static final String HURRICANE_EVENT_FILE_NAME = "jsonfiles" + File.separator + "HurricaneEvents.json";
+    protected static final String RELIEF_REQUEST_FILE_NAME = "jsonfiles" + File.separator + "ReliefRequest.json";
 
     protected static final String USER_ID = "id";
     protected static final String USER_USERNAME = "userName";
@@ -20,8 +20,14 @@ public abstract class DataConstants{
 
     protected static final String SHELTER_ID = "id";
     protected static final String SHELTER_NAME = "name";
+    protected static final String SHELTER_LOCATION = "location";
     protected static final String SHELTER_CAPACITY = "capacity";
-    protected static final String SHELTER_OCCUPANCY = "currentOccupancy";
+    protected static final String SHELTER_OCCUPANCY = "occupancy";
+    protected static final String SHELTER_PET_FRIENDLY = "petFriendly";
+    protected static final String SHELTER_ACCESSIBLE = "accessible";
+    protected static final String SHELTER_MEDICAL_STAFF = "medicalStaff";
+    protected static final String SHELTER_VET_STAFF = "vetStaff";
+    protected static final String SHELTER_OPERATIONAL_STATUS = "operationalStatus";
 
     protected static final String RELIEF_REQUEST_ID = "id";
     protected static final String RELIEF_REQUEST_ASSISTANCE = "assistance";

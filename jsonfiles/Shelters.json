@@ -1,42 +1,43 @@
-//this needs to be fixed, does not match Shelter.java
-{
-  "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-  "name": "Columbia Columbia High Gym Shelter",
-  "location": {
-    "id": "555e4567-e89b-12d3-a456-426614174222",
-    "street1": "501 Park St",
-    "city": "Columbia",
-    "state": "SC",
-    "zipCode": "29201",
-    "latitude": 34.0012,
-    "longitude": -81.0321
-  },
-  "capacity": 250,
-  "occupancy": 112,
-  "petFriendly": true,
-  "accessible": true,
-  "medicalStaff" : true,
-  "vetStaff": false,
-  "amenities": [
-    "Cots",
-    "Power Generators"
-  ],
-  "shelterResources": [
-    {
-      "type" : "Water Bottles",
-      "quantity": 1200,
-      "unit" : "cases",
-      "availableUntil": "2026-10-15T12:00:00",
-      "lowStrockThreshold": 200
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Columbia High Gym Shelter",
+    "location": {
+      "id": "555e4567-e89b-12d3-a456-426614174222",
+      "street1": "501 Park St",
+      "street2": "",
+      "city": "Columbia",
+      "state": "SC",
+      "zipCode": "29201",
+      "latitude": 34.0012,
+      "longitude": -81.0321
     },
-    {
-      "type": "Blankets",
-      "quantity": 300,
-      "unit": "individual",
-      "availableUntil": "2026-10-15T12:00:00",
-      "lowStockThreshold": 50
-    }
-  ],
-  "operationalStatus": "OPEN"
-}
-
+    "capacity": 250,
+    "occupancy": 112,
+    "petFriendly": true,
+    "accessible": true,
+    "medicalStaff": true,
+    "vetStaff": false,
+    "amenities": [
+      "Cots",
+      "Power Generators"
+    ],
+    "shelterResources": [
+      {
+        "type": "Water Bottles",
+        "quantity": 1200,
+        "unit": "cases",
+        "availableUntil": "2026-10-15T12:00:00",
+        "lowStockThreshold": 200
+      },
+      {
+        "type": "Blankets",
+        "quantity": 300,
+        "unit": "individual",
+        "availableUntil": "2026-10-15T12:00:00",
+        "lowStockThreshold": 50
+      }
+    ],
+    "operationalStatus": "OPEN"
+  }
+]

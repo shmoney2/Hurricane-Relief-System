@@ -1,4 +1,4 @@
-package Hurricane.hurricane_system.src.main.java.com.model;
+package com.model;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 
 public class DataLoader extends DataConstants {
 
-    // 1. SHELTERS (Intermediate)
     public static ArrayList<Shelter> getShelters() {
         ArrayList<Shelter> shelters = new ArrayList<>();
 
@@ -25,18 +24,64 @@ public class DataLoader extends DataConstants {
                 UUID id = UUID.fromString((String) shelterJSON.get(SHELTER_ID));
                 String name = (String) shelterJSON.get(SHELTER_NAME);
                 int capacity = (int) (long) shelterJSON.get(SHELTER_CAPACITY);
-                int currentOccupancy = (int) (long) shelterJSON.get(SHELTER_OCCUPANCY);
+                int occupancy = (int) (long) shelterJSON.get(SHELTER_OCCUPANCY);
 
-                shelters.add(new Shelter(id, name, capacity, currentOccupancy));
+                boolean petFriendly = (Boolean) shelterJSON.get(SHELTER_PET_FRIENDLY);
+                boolean accessible = Boolean.TRUE.equals(shelterJSON.get(SHELTER_ACCESSIBLE));
+                boolean medicalStaff = Boolean.TRUE.equals(shelterJSON.get(SHELTER_MEDICAL_STAFF));
+                boolean vetStaff = Boolean.TRUE.equals(shelterJSON.get(SHELTER_VET_STAFF));
+
+                String operationalStatus = (String) shelterJSON.get(SHELTER_OPERATIONAL_STATUS);
+
+                JSONObject locationJSON = (JSONObject) shelterJSON.get(SHELTER_LOCATION);
+                Location address = null;
+                if (locationJSON != null) {
+                    UUID locId = UUID.fromString((String) locationJSON.get("id"));
+                    String street1 = (String) locationJSON.get("street1");
+                    String street2 = (String) locationJSON.get("street2");
+                    String city = (String) locationJSON.get("city");
+                    String state = (String) locationJSON.get("state");
+                    String zipCode = (String) locationJSON.get("zipCode");
+                    double latitude = (Double) locationJSON.get("latitude");
+                    double longitude = (Double) locationJSON.get("longitude");
+
+                    address = new Location(locId, street1, street2, city, state, zipCode, latitude, longitude);
+                }
+
+                // Construct Shelter Object
+                Shelter shelter = new Shelter(
+                    id, name, address, capacity, occupancy, 
+                    petFriendly, accessible, medicalStaff, vetStaff, operationalStatus
+                );
+
+                shelters.add(shelter);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return shelters;
     }
+        public static void main(String[] args) {
+        System.out.println("--- Testing DataLoader.getShelters() ---");
+        
+        // Call the static method to load shelters from JSON
+        ArrayList<Shelter> shelters = DataLoader.getShelters();
 
-    // 2. USERS (Intermediate - Handles Array of Strings)
+        if (shelters.isEmpty()) {
+            System.out.println("No shelters loaded. Please check that 'shelters.json' exists in the json folder and contains valid JSON.");
+        } else {
+            System.out.println("Successfully loaded " + shelters.size() + " shelter(s):\n");
+            
+            for (Shelter shelter : shelters) {
+                // Prints using Shelter's toString() method
+                System.out.println(shelter); 
+                System.out.println("----------------------------------------");
+            }
+        }
+    }
+
     public static ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
 
@@ -64,7 +109,7 @@ public class DataLoader extends DataConstants {
                     }
                 }
 
-                users.add(new User(id, userName, firstName, lastName, age, password, roles));
+                users.add(new User(id, userName, firstName, lastName, password, location));
             }
         } 
         catch (Exception e) {
@@ -74,7 +119,6 @@ public class DataLoader extends DataConstants {
         return users;
     }
 
-    // 3. RELIEF REQUESTS (Hard - Parses Enums and Object References)
     public static ArrayList<ReliefRequest> getReliefRequests() {
         ArrayList<ReliefRequest> requests = new ArrayList<>();
 
@@ -96,7 +140,6 @@ public class DataLoader extends DataConstants {
 
                 // If JSON includes Enum for urgency:
                 // String urgencyStr = (String) requestJSON.get("urgency");
-                // UrgencyTier urgency = UrgencyTier.valueOf(urgencyStr);
 
                 requests.add(new ReliefRequest(id, assistance, people, status));
             }
