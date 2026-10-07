@@ -11,12 +11,14 @@ protected static final String SHELTER_FILE_NAME = "jsonfiles" + File.separator +
     protected static final String RELIEF_REQUEST_FILE_NAME = "jsonfiles" + File.separator + "ReliefRequest.json";
 
     protected static final String USER_ID = "id";
-    protected static final String USER_USERNAME = "userName";
-    protected static final String USER_FIRST_NAME = "firstName";
-    protected static final String USER_LAST_NAME = "lastName";
-    protected static final String USER_AGE = "age";
-    protected static final String USER_PASSWORD = "password";
-    protected static final String USER_ROLES = "roles";
+protected static final String USER_USERNAME = "userName";
+protected static final String USER_FIRST_NAME = "firstName";
+protected static final String USER_LAST_NAME = "lastName";
+protected static final String USER_PASSWORD = "password";
+protected static final String USER_LOCATION = "location";
+protected static final String USER_SAFETY = "safety";
+protected static final String USER_ROLES = "roles";
+protected static final String USER_EMERGENCY_CONTACTS = "emergencyContacts";
 
     protected static final String SHELTER_ID = "id";
     protected static final String SHELTER_NAME = "name";

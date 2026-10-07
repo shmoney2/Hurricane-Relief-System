@@ -63,61 +63,97 @@ public class DataLoader extends DataConstants {
 
         return shelters;
     }
-        public static void main(String[] args) {
-        System.out.println("--- Testing DataLoader.getShelters() ---");
-        
-        // Call the static method to load shelters from JSON
-        ArrayList<Shelter> shelters = DataLoader.getShelters();
-
-        if (shelters.isEmpty()) {
-            System.out.println("No shelters loaded. Please check that 'shelters.json' exists in the json folder and contains valid JSON.");
-        } else {
-            System.out.println("Successfully loaded " + shelters.size() + " shelter(s):\n");
-            
-            for (Shelter shelter : shelters) {
-                // Prints using Shelter's toString() method
-                System.out.println(shelter); 
-                System.out.println("----------------------------------------");
-            }
-        }
-    }
 
     public static ArrayList<User> getUsers() {
-        ArrayList<User> users = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
 
-        try {
-            FileReader reader = new FileReader(USER_FILE_NAME);
-            JSONParser parser = new JSONParser();
-            JSONArray usersJSON = (JSONArray) parser.parse(reader);
+    try {
+        FileReader reader = new FileReader(USER_FILE_NAME);
+        JSONParser parser = new JSONParser();
+        Object parsedData = parser.parse(reader);
 
-            for (int i = 0; i < usersJSON.size(); i++) {
-                JSONObject userJSON = (JSONObject) usersJSON.get(i);
-
-                UUID id = UUID.fromString((String) userJSON.get(USER_ID));
-                String userName = (String) userJSON.get(USER_USERNAME);
-                String firstName = (String) userJSON.get(USER_FIRST_NAME);
-                String lastName = (String) userJSON.get(USER_LAST_NAME);
-                int age = (int) (long) userJSON.get(USER_AGE);
-                String password = (String) userJSON.get(USER_PASSWORD);
-
-                // Parsing array of roles
-                JSONArray rolesJSONArray = (JSONArray) userJSON.get(USER_ROLES);
-                ArrayList<String> roles = new ArrayList<>();
-                if (rolesJSONArray != null) {
-                    for (int j = 0; j < rolesJSONArray.size(); j++) {
-                        roles.add((String) rolesJSONArray.get(j));
-                    }
-                }
-
-                users.add(new User(id, userName, firstName, lastName, password, location));
-            }
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
+        JSONArray usersJSON;
+        if (parsedData instanceof JSONArray) {
+            usersJSON = (JSONArray) parsedData;
+        } else if (parsedData instanceof JSONObject) {
+            usersJSON = new JSONArray();
+            usersJSON.add(parsedData); 
+        } else {
+            return users;
         }
 
-        return users;
+        for (int i = 0; i < usersJSON.size(); i++) {
+            JSONObject userJSON = (JSONObject) usersJSON.get(i);
+
+            UUID id = UUID.fromString((String) userJSON.get(USER_USERNAME != null ? USER_ID : "id"));
+            String userName = (String) userJSON.get(USER_USERNAME);
+            String firstName = (String) userJSON.get(USER_FIRST_NAME);
+            String lastName = (String) userJSON.get(USER_LAST_NAME);
+            String password = (String) userJSON.get(USER_PASSWORD);
+
+            JSONObject locationJSON = (JSONObject) userJSON.get(USER_LOCATION);
+            Location location = null;
+            if (locationJSON != null) {
+                UUID locId = UUID.fromString((String) locationJSON.get("id"));
+                String street1 = (String) locationJSON.get("street1");
+                String street2 = (String) locationJSON.get("street2");
+                String city = (String) locationJSON.get("city");
+                String state = (String) locationJSON.get("state");
+                String zipCode = (String) locationJSON.get("zipCode");
+                double latitude = (Double) locationJSON.get("latitude");
+                double longitude = (Double) locationJSON.get("longitude");
+
+                location = new Location(locId, street1, street2, city, state, zipCode, latitude, longitude);
+            }
+
+            String safetyString = (String) userJSON.get(USER_SAFETY);
+            SafetyCategory safety = null;
+            if (safetyString != null) {
+                try {
+                    safety = SafetyCategory.valueOf(safetyString.toUpperCase());
+                } catch (Exception e) {
+
+                }
+            }
+
+            // Roles
+            JSONArray rolesJSONArray = (JSONArray) userJSON.get(USER_ROLES);
+            ArrayList<UserRole> roles = new ArrayList<>();
+            if (rolesJSONArray != null) {
+                for (int j = 0; j < rolesJSONArray.size(); j++) {
+                    String roleStr = (String) rolesJSONArray.get(j);
+                    try {
+                        roles.add(UserRole.valueOf(roleStr.toUpperCase()));
+                    } catch (Exception e) {
+                    
+                    }
+                }
+            }
+
+            User user = new User(id, userName, firstName, lastName, password, location, safety, roles);
+            users.add(user);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
+    return users;
+}
+public static void main(String[] args) {
+    System.out.println("--- Testing DataLoader.getUsers() ---");
+    ArrayList<User> users = DataLoader.getUsers();
+
+    if (users.isEmpty()) {
+        System.out.println("No users loaded.");
+    } else {
+        System.out.println("Successfully loaded " + users.size() + " user(s):\n");
+        for (User user : users) {
+            System.out.println(user);
+            System.out.println("----------------------------------------");
+        }
+    }
+}
 
     public static ArrayList<ReliefRequest> getReliefRequests() {
         ArrayList<ReliefRequest> requests = new ArrayList<>();
@@ -150,7 +186,6 @@ public class DataLoader extends DataConstants {
         return requests;
     }
 
-    // 4. LOCATIONS (Easy)
     public static ArrayList<Location> getLocations() {
         ArrayList<Location> locations = new ArrayList<>();
 
@@ -175,7 +210,6 @@ public class DataLoader extends DataConstants {
         return locations;
     }
 
-    // 5. GEOGRAPHIC REGIONS (Easy)
     public static ArrayList<GeographicRegion> getGeographicRegions() {
         ArrayList<GeographicRegion> regions = new ArrayList<>();
 
@@ -197,7 +231,6 @@ public class DataLoader extends DataConstants {
         return regions;
     }
 
-    // 6. HURRICANE EVENTS (Easy)
     public static ArrayList<HurricaneEvent> getHurricaneEvents() {
         ArrayList<HurricaneEvent> events = new ArrayList<>();
 
