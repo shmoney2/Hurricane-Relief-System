@@ -1,4 +1,6 @@
-package Hurricane.hurricane_system.src.main.java.com.model;
+package com.model;
+
+import java.util.UUID;
 
 import java.util.UUID;
 
@@ -47,4 +49,9 @@ public class Location {
     public double getLatitude() { return latitude; }
     public double getLongitude() { return longitude; }
     public String getCity() { return city; }
+
+    @Override
+    public String toString() {
+        return formatAddress();
+    }
 }

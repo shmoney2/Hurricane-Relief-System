@@ -1,4 +1,4 @@
-package Hurricane.hurricane_system.src.main.java.com.model;
+package com.model;
 
 import java.util.UUID;
 
@@ -14,26 +14,28 @@ public class Shelter {
     private boolean vetStaff;
     private String operationalStatus;
 
-    public Shelter(String name, Location address, int capacity) { //Q: should operationalStatus be required?
-        this.id = UUID.randomUUID();
+    public Shelter(UUID id, String name, Location address, int capacity) { //Q: should operationalStatus be required?
+        this.id = id;
         this.name = name;
         this.address = address;
         this.capacity = capacity;
     }
 
     public Shelter(UUID id, String name, Location address, int capacity, int occupancy, 
-                   boolean petFriendly, boolean accessible, boolean medicalStaff, 
-                   boolean vetStaff, String operationalStatus) {
+               boolean petFriendly, boolean accessible, boolean medicalStaff, 
+               boolean vetStaff, String operationalStatus) {
 
-        this.name = name;
-        this.capacity = capacity;
-        this.occupancy = occupancy;
-        this.petFriendly = petFriendly;
-        this.accessible =  accessible;
-        this.medicalStaff = medicalStaff;
-        this.vetStaff = vetStaff;
-        this.operationalStatus = operationalStatus;
-    }
+    this.id = id;
+    this.name = name;
+    this.address = address; 
+    this.capacity = capacity;
+    this.occupancy = occupancy;
+    this.petFriendly = petFriendly;
+    this.accessible = accessible;
+    this.medicalStaff = medicalStaff;
+    this.vetStaff = vetStaff;
+    this.operationalStatus = operationalStatus;
+}
 
     public void checkIn(String qrCode){
         occupancy++;
@@ -76,5 +78,21 @@ public class Shelter {
     public void setMedicalStaff(boolean medicalStaff) { this.medicalStaff = medicalStaff; }
     public void setVetStaff(boolean vetStaff) { this.vetStaff = vetStaff; }
     public void setOperationalStatus(String operationalStatus) { this.operationalStatus = operationalStatus; }
+
+    @Override
+    public String toString() {
+        return "Shelter {" +
+                "\n  ID: " + id +
+                "\n  Name: '" + name + '\'' +
+                "\n  Capacity: " + capacity +
+                "\n  Occupancy: " + occupancy +
+                "\n  Pet Friendly: " + petFriendly +
+                "\n  Accessible: " + accessible +
+                "\n  Medical Staff: " + medicalStaff +
+                "\n  Vet Staff: " + vetStaff +
+                "\n  Operational Status: '" + operationalStatus + '\'' +
+                "\n  Address: " + (address != null ? address.toString() : "N/A") +
+                "\n}";
+    }
 
 }
