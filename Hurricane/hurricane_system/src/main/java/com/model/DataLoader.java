@@ -1,5 +1,6 @@
 package com.model;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -48,8 +49,7 @@ public class DataLoader extends DataConstants {
                     address = new Location(locId, street1, street2, city, state, zipCode, latitude, longitude);
                 }
 
-                // Construct Shelter Object
-                Shelter shelter = new Shelter(
+                    Shelter shelter = new Shelter(
                     id, name, address, capacity, occupancy, 
                     petFriendly, accessible, medicalStaff, vetStaff, operationalStatus
                 );
@@ -158,7 +158,6 @@ public class DataLoader extends DataConstants {
                 int people = (int) (long) requestJSON.get(RELIEF_REQUEST_PEOPLE_COUNT);
                 int priorityScore = (int) (long) requestJSON.get(RELIEF_REQUEST_PRIORITY_SCORE);
 
-                // Parse Location
                 JSONObject locationJSON = (JSONObject) requestJSON.get(RELIEF_REQUEST_LOCATION);
                 Location location = null;
                 if (locationJSON != null) {
@@ -212,70 +211,49 @@ public class DataLoader extends DataConstants {
         return requests;
     }
 
-
-    public static ArrayList<Location> getLocations() {
-        ArrayList<Location> locations = new ArrayList<>();
-
-        try {
-            FileReader reader = new FileReader(LOCATION_FILE_NAME);
-            JSONParser parser = new JSONParser();
-            JSONArray locationsJSON = (JSONArray) parser.parse(reader);
-
-            for (int i = 0; i < locationsJSON.size(); i++) {
-                JSONObject locationJSON = (JSONObject) locationsJSON.get(i);
-
-                String address = (String) locationJSON.get("address");
-                double latitude = (double) locationJSON.get("latitude");
-                double longitude = (double) locationJSON.get("longitude");
-
-                locations.add(new Location(address, latitude, longitude));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return locations;
-    }
-
-    public static ArrayList<GeographicRegion> getGeographicRegions() {
-        ArrayList<GeographicRegion> regions = new ArrayList<>();
-
-        try {
-            FileReader reader = new FileReader(REGION_FILE_NAME);
-            JSONParser parser = new JSONParser();
-            JSONArray regionsJSON = (JSONArray) parser.parse(reader);
-
-            for (int i = 0; i < regionsJSON.size(); i++) {
-                JSONObject regionJSON = (JSONObject) regionsJSON.get(i);
-
-                String name = (String) regionJSON.get("name");
-                regions.add(new GeographicRegion(name));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return regions;
-    }
-
     public static ArrayList<HurricaneEvent> getHurricaneEvents() {
         ArrayList<HurricaneEvent> events = new ArrayList<>();
 
-        try {
-            FileReader reader = new FileReader(EVENT_FILE_NAME);
+        try (FileReader reader = new FileReader(EVENT_FILE_NAME)) {
             JSONParser parser = new JSONParser();
             JSONArray eventsJSON = (JSONArray) parser.parse(reader);
 
-            for (int i = 0; i < eventsJSON.size(); i++) {
-                JSONObject eventJSON = (JSONObject) eventsJSON.get(i);
+            for (Object obj : eventsJSON) {
+                JSONObject eventJSON = (JSONObject) obj;
 
-                String name = (String) eventJSON.get("name");
-                events.add(new HurricaneEvent(name));
+                String idStr = (String) eventJSON.get(HURRICANE_EVENT_ID);
+                UUID id = (idStr != null) ? UUID.fromString(idStr) : UUID.randomUUID();
+                
+                String name = (String) eventJSON.get(HURRICANE_EVENT_NAME);
+                
+                int category = 0;
+                if (eventJSON.get(HURRICANE_EVENT_CATEGORY) != null) {
+                    category = ((Number) eventJSON.get(HURRICANE_EVENT_CATEGORY)).intValue();
+                }
+
+                String status = (String) eventJSON.get(HURRICANE_EVENT_STATUS);
+
+                events.add(new HurricaneEvent(id, name, category, status));
             }
+        } catch (FileNotFoundException e) {
+            System.err.println("Hurricane events file not found: " + EVENT_FILE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return events;
+    }
+
+        public static void main(String[] args) {
+        ArrayList<HurricaneEvent> events = DataLoader.getHurricaneEvents();
+
+        if (events.isEmpty()) {
+            System.out.println("No hurricane events loaded. Check your JSON file path or structure.");
+        } else {
+            System.out.println("Successfully loaded " + events.size() + " hurricane event(s):\n");
+            for (HurricaneEvent event : events) {
+                System.out.println(event);
+            }
+        }
     }
 }

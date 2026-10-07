@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ReliefRequest {
     private UUID id;
-    private String createdAt; // Using String or DateTime depending on project class
+    private String createdAt; 
     private Location location;
     private String assistance;
     private String description;
