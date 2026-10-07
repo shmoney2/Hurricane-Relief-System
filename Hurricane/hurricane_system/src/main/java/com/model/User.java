@@ -17,8 +17,8 @@ public class User {
     private List<EmergencyContact> emergencyContacts;
 
     // Makes a new user with a fresh id. Used for create account.
-    public User(String userName, String firstName, String lastName, String password, Location location) {
-        this.id = UUID.randomUUID();
+    public User(UUID id, String userName, String firstName, String lastName, String password, Location location) {
+        this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
